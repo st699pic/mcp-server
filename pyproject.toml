@@ -1,0 +1,12 @@
+[project]
+name = "st-mcp-server"
+version = "0.1.0"
+description = "摄图网是一个版权素材下载网站，可以搜索2亿+摄影照片、设计模板、背景图、插画、GIF动图、免抠元素、视频素材、PPT模板、Word模板、Excel模板等素材，进行下载和编辑，用户可以通过搜索关键词，在网站上找到精美高清素材图片和视频"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "dotenv>=0.9.9",
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.9.0",
+]

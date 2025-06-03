@@ -1,0 +1,258 @@
+openapi: 3.0.1
+info:
+    title: 摄图网API
+    description: 摄图网是一个版权素材下载网站，可以搜索2亿+摄影照片、设计模板、背景图、插画、GIF动图、免抠元素、视频素材、PPT模板、Word模板、Excel模板等素材，进行下载和编辑，用户可以通过搜索关键词，在网站上找到精美高清素材图片。
+    version: "v1"
+servers:
+    - url: https://api.699pic.com/v1/AiPlugin    #  PLUGIN_HOST 的位置理解为提供数据的服务地址（ IP + 端口或者服务 host），开发者需要根据实际情况替换成自己服务地址，调试环境可以是 localhost + 端口，正式上线需要换成公网地址。
+paths:
+    /search_image:
+        post:
+            operationId: searchImage
+            summary: 图片搜索
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/searchImageRequest"
+            responses:
+                "200":
+                    description: 图片搜索结果展示完成
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/searchImageResponse"
+    /search_media:
+        post:
+            operationId: searchMedia
+            summary: 视频搜索
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/searchMediaRequest"
+            responses:
+                "200":
+                    description: 根据用户输入显示相应的视频结果
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/searchMediaResponse"
+    /search_music:
+        post:
+            operationId: searchMusic
+            summary: 音乐搜索
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/searchMusicRequest"
+            responses:
+                "200":
+                    description: 根据用户输入显示相应的音乐结果
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/searchMusicResponse"
+
+components:
+    schemas:
+        searchImageRequest:
+            type: object
+            required: [kw, order, has_avatar, is_prime, extension_name, direction, pic_type, num, sex, race, page, size]
+            properties:
+                kw:
+                    type: string
+                    description: "搜索词"
+                order:
+                    type: integer
+                    description: "排序 (1：推荐, 2：最新)"
+                has_avatar:
+                    type: integer
+                    description: "肖像权 (0：全部 1：有 2：无)"
+                is_prime:
+                    type: integer
+                    description: "精品"
+                extension_name:
+                    type: string
+                    description: "格式"
+                direction:
+                    type: integer
+                    description: "比例 (0：竖版 1：横版 2：全部)"
+                pic_type:
+                    type: integer
+                    description: "图片类型 (0:all 1：照片 2：创意背景 3：插画 4：设计模板 5：办公文档 7：免抠元素 9：gif)"
+                num:
+                    type: integer
+                    description: "人数 (4：全部)"
+                sex:
+                    type: integer
+                    description: "性别 (0：全部 1：男 2：女)"
+                race:
+                    type: integer
+                    description: "人种 (0：全部 1：黄色；2：白色；3：黑色：4：棕色)"
+                page:
+                    type: integer
+                    description: "页码"
+                size:
+                    type: integer
+                    description: "一页显示多少条"
+        searchImageResponse:
+            type: object
+            description: "搜索结果"
+            properties:
+                code:
+                    type: integer
+                    description: "返回状态"
+                    example: 1
+                count:
+                    type: integer
+                    description: "返回结果总数目"
+                msg:
+                    type: "string"
+                    description: "消息"
+                data:
+                    type: array
+                    description: "具体数据信息"
+                    items:
+                        type: object
+                        properties:
+                            title:
+                                type: string
+                                description: "标题"
+                                example: "标题"
+                            pic_type:
+                                type: integer
+                                description: "图片类别"
+                                example: 1
+                            extension_name:
+                                type: string
+                                description: "图片格式"
+                                example: "jpg"
+                            detail_preview_src:
+                                type: string
+                                description: "图片预览地址"
+                                example: "https://imgs.699pic.com/images/500/562/286.jpg!detail.v1"
+                            href:
+                                type: string
+                                format: uri
+                                description: "详情页地址"
+                                example: "https://699pic.com/tupian-500562286.html"
+        searchMediaRequest:
+            type: object
+            required: [kw, order, cate, video_rate, video_scale, page, size]
+            properties:
+                kw:
+                    type: string
+                    description: "搜索词"
+                order:
+                    type: integer
+                    description: "排序 (1：推荐, 2：最新)"
+                cate:
+                    type: integer
+                    description: "分类 视频类别 (0：全部;18：实拍;98：AE模板;227：背景视频;338：pr模板;351：会声会影;363：视频元素;449：edius;460：视频海报)"
+                video_rate:
+                    type: integer
+                    description: "视频分辨率 (0：全部1：720p 2：1080p 3：4k 4：8k)"
+                video_scale:
+                    type: integer
+                    description: "视频比例 (0-所有;1-2:1;2-16:9;3-3:2;4-4:3;5-1:1;6-3:4;7-2:3;8-9:16;9-1:2;10-2.39:1;255-其它)"
+                page:
+                    type: integer
+                    description: "页码"
+                size:
+                    type: integer
+                    description: "一页显示多少条"
+        searchMediaResponse:
+            type: object
+            description: "搜索结果"
+            properties:
+                code:
+                    type: integer
+                    description: "返回状态"
+                    example: 1
+                count:
+                    type: integer
+                    description: "返回结果总数目"
+                msg:
+                    type: string
+                    description: "消息"
+                data:
+                    type: array
+                    description: "具体数据信息"
+                    items:
+                        type: object
+                        properties:
+                            title:
+                                type: string
+                                description: "标题"
+                            extension_name:
+                                type: string
+                                description: "视频格式"
+                            detail_preview_src:
+                                type: string
+                                description: "视频预览地址"
+                            href:
+                                type: string
+                                format: uri
+                                description: "详情页地址"
+                            detail_video_src:
+                                type: string
+                                description: "详情图地址"
+
+        searchMusicRequest:
+            type: object
+            required: [ kw, order, duration, page, size ]
+            properties:
+                kw:
+                    type: string
+                    description: "搜索词"
+                order:
+                    type: integer
+                    description: "排序 (1：推荐, 2：最新)"
+                duration:
+                    type: integer
+                    description: "时长 (0：全部 1：30秒以下 2：30-60s 3：60s-2m 4：2-3m 5：3m及以上)"
+                page:
+                    type: integer
+                    description: "页码"
+                size:
+                    type: integer
+                    description: "一页显示多少条"
+        searchMusicResponse:
+            type: object
+            description: "搜索结果"
+            properties:
+                code:
+                    type: integer
+                    description: "返回状态"
+                    example: 1
+                count:
+                    type: integer
+                    description: "返回结果总数目"
+                msg:
+                    type: "string"
+                    description: "消息"
+                data:
+                    type: array
+                    description: "具体数据信息"
+                    items:
+                        type: object
+                        properties:
+                            title:
+                                type: string
+                                description: "标题"
+                            cover:
+                                type: string
+                                description: "封面图"
+                            href:
+                                type: string
+                                format: uri
+                                description: "详情页地址"
+                            detail_music_src:
+                                type: string
+                                description: "预览音乐地址"
+
