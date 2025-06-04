@@ -1,5 +1,6 @@
-MMCP Server 产品名称：ST-MCP-Server
-![产品Logo](https://static.699pic.com/baiduAiPlugin/logo.png)
+## ST-MCP-Server
+
+[[https://static.699pic.com/baiduAiPlugin/logo.png]()]
 
 ## 版本信息
 
@@ -21,7 +22,7 @@ ST-MCP-Server 是摄图网提供的多媒体内容搜索服务，集成了图片
 
 ## 标签
 
-图片搜索，视频搜索，音乐搜索，媒体资源
+图片搜索，视频搜索，音乐搜索
 
 ## Tools
 
@@ -177,7 +178,7 @@ ST-MCP-Server 是摄图网提供的多媒体内容搜索服务，集成了图片
 
 ## 可适配平台
 
-Python, Node.js, Java, Cursor
+可以使用 cline, cursor, claude desktop 或支持MCP server调用的的其他终端
 
 ## 服务开通链接
 
@@ -189,44 +190,68 @@ API Key 认证
 
 - 获取方式：通过摄图网申请
 
-- 使用方式：在请求头中添加 `X-API-KEY` 和 `X-API-SECRET`
-  
+- 使用方式：在请求头中添加 `X-API-KEY` 和 `X-API-TOKEN`
+
 ## 安装部署
+
+### 系统依赖
+
+- 安装 Python 3.12 或者更高版本
+- 安装 uv
+  - 如果是linux系统
+    
+    ```bash
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ```
+  - 如果是window系统
+    
+    ```powershell
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+    ```
+- 同步依赖项并更uv.lock:
   
-### 客户部署服务
+  ```bash
+  uv sync
+  ```
+- 构建cmp server:
+  
+  ```bash
+  uv build
+  ```
 
-1. 克隆代码仓库
-   
-   ```bash
-   git clone https://github.com/your-org/st-mcp-server.git
-   ```
+### 使用 Claude Desktop
 
-2. 安装依赖
-   
-   ```bash
-   pip install -r requirements.txt
-   ```
+On MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
 
-3. 配置环境变量
-   
-   ```bash
-   cp .env.example .env
-   # 编辑 .env 文件，填入以下配置：
-   # API_KEY=你的API密钥
-   # API_SECRET=你的API密钥
-   # LOG_LEVEL=INFO
-   ```
+On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
-4. 启动服务
-   
-   ```bash
-   uv run main.py
-   ```
-   
-### 客户提供代码
-   
-   本服务支持代码部署，客户可以获取源代码并根据需求进行定制化开发。
-   
+
+
+server configuration
+
+```json
+{
+  "mcpServers": {
+    "mongo_mcp_server": {
+      "disabled": false,
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/<path to mcp-servers>/mcp-server/",
+        "run",
+        "main.py"
+      ],
+      "env": {
+        "API_KEY": "your-access-key-id",
+        "API_SECRET": "your-access-key-secret"
+      },
+      "transportType": "stdio"
+    }
+  }
+}
+
+```
+
 ## License
-   
+
    MIT License
