@@ -38,32 +38,48 @@ ST-MCP-Server 是摄图网提供的多媒体内容搜索服务，集成了图片
 输入：
 
     - kw（string）：搜索关键词
-
+    
     - order（int）：排序方式（1：推荐, 2：最新）
-
+    
     - has_avatar（int）：肖像权（0：全部 1：有 2：无）
-
+    
     - is_prime（int）：精品（0：全部 1：是 2：否）
-
+    
     - extension_name（string）：图片格式
-
+    
     - direction（int）：比例（0：竖版 1：横版 2：全部）
-
+    
     - pic_type（int）：图片类型（0:all 1：照片 2：创意背景 3：插画 4：设计模板 5：办公文档 7：免抠元素 9：gif）
-
+    
     - num（int）：人数（4：全部）
-
+    
     - sex（int）：性别（0：全部 1：男 2：女）
-
+    
     - race（int）：人种（0：全部 1：黄色 2：白色 3：黑色 4：棕色）
-
+    
     - page（int）：页码
-
+    
     - size（int）：每页显示数量
 
 输出：
 
-    - APIResponse：包含搜索结果的响应对象
+    - code (int): 状态码
+    
+    - msg (string): 错误信息
+    
+    - data (array): 搜索结果
+    
+        - title (string): 图片标题
+    
+        - pic_type (int): 图片类型
+    
+        - extension_name (string): 图片格式
+    
+        - detail_preview_src (string): 图片地址
+    
+        - href (string): 图片链接
+    
+    - count (int): 总条数，用于分页
 
 #### 最容易被唤起的 Prompt 示例
 
@@ -80,22 +96,38 @@ ST-MCP-Server 是摄图网提供的多媒体内容搜索服务，集成了图片
 输入：
 
     - kw（string）：搜索关键词
-
+    
     - order（int）：排序方式（1：推荐, 2：最新）
-
+    
     - cate（int）：视频类别（0：全部 18：实拍 98：AE模板 227：背景视频 338：pr模板 351：会声会影 363：视频元素 449：edius 460：视频海报）
-
+    
     - video_rate（int）：视频分辨率（0：全部 1：720p 2：1080p 3：4k 4：8k）
-
+    
     - video_scale（int）：视频比例（0-所有 1-2:1 2-16:9 3-3:2 4-4:3 5-1:1 6-3:4 7-2:3 8-9:16 9-1:2 10-2.39:1 255-其它）
-
+    
     - page（int）：页码
-
+    
     - size（int）：每页显示数量
 
 输出：
 
-    - APIResponse：包含搜索结果的响应对象
+    - code (int): 状态码
+    
+    - msg (string): 错误信息
+    
+    - data (array): 搜索结果
+    
+        - title (string): 视频标题
+    
+        - cate (int): 视频类型
+    
+        - extension_name (string): 视频格式
+    
+        - detail_preview_src (string): 视频地址
+    
+        - href (string): 视频链接
+    
+    - count (int): 总条数，用于分页
 
 #### 最容易被唤起的 Prompt 示例
 
@@ -110,18 +142,34 @@ ST-MCP-Server 是摄图网提供的多媒体内容搜索服务，集成了图片
 #### 调试所需的输入参数:
 
 输入：
+
     - kw（string）：搜索关键词
-
+    
     - order（int）：排序方式（1：推荐, 2：最新）
-
+    
     - duration（int）：时长（0：全部 1：30秒以下 2：30-60s 3：60s-2m 4：2-3m 5：3m及以上）
-
+    
     - page（int）：页码
-
+    
     - size（int）：每页显示数量
 
 输出：
-    - APIResponse：包含搜索结果的响应对象
+
+    - code (int): 状态码
+    
+    - msg (string): 错误信息
+    
+    - data (array): 搜索结果
+    
+        - title (string): 音乐标题
+    
+        - cover (int): 音乐封面
+    
+        - detail_preview_src (string): 音乐地址
+    
+        - href (string): 音乐链接
+    
+    - count (int): 总条数，用于分页
 
 #### 最容易被唤起的 Prompt 示例
 
@@ -143,20 +191,22 @@ API Key 认证
 
 - 使用方式：在请求头中添加 `X-API-KEY` 和 `X-API-SECRET`
   
-  ## 安装部署
+## 安装部署
   
-  ### 客户部署服务
+### 客户部署服务
 
 1. 克隆代码仓库
    
    ```bash
    git clone https://github.com/your-org/st-mcp-server.git
    ```
+
 2. 安装依赖
    
    ```bash
    pip install -r requirements.txt
    ```
+
 3. 配置环境变量
    
    ```bash
@@ -166,20 +216,17 @@ API Key 认证
    # API_SECRET=你的API密钥
    # LOG_LEVEL=INFO
    ```
+
 4. 启动服务
    
    ```bash
    uv run main.py
    ```
    
-   ### 客户提供代码
+### 客户提供代码
    
    本服务支持代码部署，客户可以获取源代码并根据需求进行定制化开发。
    
-   ### 客户要求我方部署
+## License
    
-   支持私有化部署，具体部署方案和权责边界需要单独沟通确定。
-
-  ## License
-  
-  MIT License
+   MIT License
