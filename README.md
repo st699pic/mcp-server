@@ -188,7 +188,7 @@ ST-MCP-Server 是摄图网提供的多媒体内容搜索服务，集成了图片
 
 API Key 认证
 
-- 获取方式：通过摄图网申请
+- 获取方式：通过[摄图网](https://699pic.com/about/contact.html)申请
 
 - 使用方式：在请求头中添加 `X-API-KEY` 和 `X-API-TOKEN`
 
